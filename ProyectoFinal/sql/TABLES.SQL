@@ -54,7 +54,7 @@ VALUES
 (11, 'PC Market', '000 Market St., San Francisco, CA 94102', 94102, 'USA', 'California', 'pcmarket@gmail.com', '415-555-1212', 1),
 (12, 'Computer Central', '111 5th Ave, New York, NY 10001', 10001, 'USA', 'New York', 'computecentral2@gmail.com', '212-555-5678', 2),
 (13, 'Geek Central', '222 Main St., Chicago, IL 60601', 60601, 'USA', 'Illinois', 'geekcentral2@gmail.com', '312-555-6789', 3),
-(14, 'Tech Solutions', '333 Market St., San Francisco, CA 94102', 94102, 'USA', 'California', 'techsolutions2@gmail.com', '415-555-1212', 4),
+(14, 'Tech Solutions', '333 Market St., San Francisco, CA 94102', 94102, 'USA', 'California', 'techsolutions2@gmail.com', '415-555-1212', 4)
 
 //CREATE TABLE EMPLEADO EMPID AUTOINCREMENT, NOMBRE, APELLIDOS, FECNA, DNI, EMAIL, TELEFONO, EMPRESAID
 CREATE TABLE EMPLEADO(
@@ -115,14 +115,14 @@ VALUES
 ("Intel Corporation", "2200 Mission College Blvd Santa Clara, CA 95054-1549", 95054, "USA", "intelinfo@intel.com", "+1-408-765-8080", "www.intel.com"),
 ("AMD Inc.", "One AMD Place Sunnyvale, CA 94088", 94088, "USA", "amdinfo@amd.com", "+1-408-749-4000", "www.amd.com"),
 ("Cisco Systems, Inc.", "170 West Tasman Drive San Jose, CA 95134", 95134, "USA", "ciscoinfo@cisco.com", "+1-408-526-4000", "www.cisco.com"),
-("LG Electronics, Inc.", "20 Yeouido-dong, Yeongdeungpo-gu, Seoul, South Korea", 150-721, "South Korea", "lgeinfo@lge.com", "+82-2-3777-1114", "www.lge.com"),
+("LG Electronics, Inc.", "20 Yeouido-dong, Yeongdeungpo-gu, Seoul, South Korea", 150-721, "South Korea", "lgeinfo@lge.com", "+82-2-3777-1114", "www.lge.com")
 
 //CREATE TABLE PRODUCTO ID, NOMBRE, DESCRIPCION, PRECIO, CANTIDAD, FABRICANTEID, TIENDAID
 CREATE TABLE PRODUCTO(
     ID INT(5) NOT NULL AUTO_INCREMENT,
     NOMBRE VARCHAR(50) NOT NULL,
     DESCRIPCION VARCHAR(200) NOT NULL,
-    PRECIO DECIMAL(5,2) NOT NULL,
+    PRECIO DECIMAL(7,3) NOT NULL,
     FABRICANTEID INT(5) NOT NULL,
     PRIMARY KEY (ID),
     FOREIGN KEY (FABRICANTEID) REFERENCES FABRICANTE(ID)
