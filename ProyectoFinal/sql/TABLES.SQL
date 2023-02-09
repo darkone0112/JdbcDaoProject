@@ -153,7 +153,7 @@ VALUES
 ("Microsoft Surface Pro 7", "2-in-1 tablet with detachable keyboard and 10th gen Intel Core processors", 899.99, 7),
 ("Asus ROG Zephyrus G15", "Gaming laptop with powerful NVIDIA graphics and fast refresh rate display", 1699.99, 8),
 ("Intel Core i9-11900K Processor", "High-performance processor for gaming and content creation", 599.99, 9),
-("AMD Ryzen 9 5900X Processor", "High-performance processor for demanding tasks and gaming", 499.99, 10),
+("AMD Ryzen 9ºººººººººººººººººººººººººººººººººººººººººº 5900X Processor", "High-performance processor for demanding tasks and gaming", 499.99, 10),
 ("Cisco Meraki MR53 Cloud-Managed Access Point", "High-performance cloud-managed wireless access point", 999.99, 11),
 ("LG OLED CX TV", "LG's latest OLED TV with 4K resolution and advanced AI features", 2199.99, 12);
 
