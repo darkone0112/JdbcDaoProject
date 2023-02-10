@@ -4,6 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 public class EmpleadoBean {
     private String nombre;
     private String apellido;
@@ -34,17 +39,68 @@ public class EmpleadoBean {
         }
     }
     
-    public void addEmpleado(String nombre, String apellido, String dni, String fecna, String email, int empresaid, int tiendaid, String direccion, String telefono) {
+    public void addEmpleado() {
+        JTextField textFieldNombre = new JTextField();
+        JTextField textFieldApellido = new JTextField();
+        JTextField textFieldDNI = new JTextField();
+        JTextField textFieldFECNA = new JTextField();
+        JTextField textFieldEmail = new JTextField();
+        JTextField textFieldEmpresaID = new JTextField();
+        JTextField textFieldTiendaID = new JTextField();
+        JTextField textFieldDireccion = new JTextField();
+        JTextField textFieldTelefono = new JTextField();
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(new javax.swing.JLabel("Nombre:"));
+        panel.add(textFieldNombre);
+        panel.add(new javax.swing.JLabel("Apellido:"));
+        panel.add(textFieldApellido);
+        panel.add(new javax.swing.JLabel("DNI:"));
+        panel.add(textFieldDNI);
+        panel.add(new javax.swing.JLabel("Fecha de Nacimiento:"));
+        panel.add(textFieldFECNA);
+        panel.add(new javax.swing.JLabel("Email:"));
+        panel.add(textFieldEmail);
+        panel.add(new javax.swing.JLabel("Empresa ID:"));
+        panel.add(textFieldEmpresaID);
+        panel.add(new javax.swing.JLabel("Tienda ID:"));
+        panel.add(textFieldTiendaID);
+        panel.add(new javax.swing.JLabel("Direccion:"));
+        panel.add(textFieldDireccion);
+        panel.add(new javax.swing.JLabel("Telefono:"));
+        panel.add(textFieldTelefono);
         try {
-            statement = conn.createStatement();
+            setNombre(textFieldNombre.getText());
+            setApellido(textFieldApellido.getText());
+            setDni(textFieldDNI.getText());
+            setFecna(textFieldFECNA.getText());
+            setEmail(textFieldEmail.getText());
+            setEmpresaid(Integer.parseInt(textFieldEmpresaID.getText()));
+            setTiendaid(Integer.parseInt(textFieldTiendaID.getText()));
+            setDireccion(textFieldDireccion.getText());
+            setTelefono(textFieldTelefono.getText());
+        } catch (NumberFormatException e) {
+            
+            try {
+                statement = conn.createStatement();
+            } catch (SQLException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
             String sql = "INSERT INTO empleados (nombre, apellido, dni, fecna, email, empresaid, tiendaid, direccion, telefono) " +
-                         "VALUES ('" + nombre + "','" + apellido + "','" + dni + "','" + fecna + "','" + email + "'," + empresaid + "," + tiendaid + ",'" + direccion + "','" + telefono + "')";
-            statement.executeUpdate(sql);
+                         "VALUES ('" + getNombre() + "','" + getApellido() + "','" + getDni() + "','" + getFecna() + "','" + getEmail() + "'," + getEmpresaid() + "," + getTiendaid() + ",'" + getDireccion() + "','" + getTelefono() + "')";
+            try {
+                statement.executeUpdate(sql);
+            } catch (SQLException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
             System.out.println("Empleado added successfully.");
-        } catch (SQLException e) {
-            System.out.println("Error adding empleado: " + e);
+            JOptionPane.showMessageDialog(null, "Empleado agregado con éxito");
         }
     }
+    
     
     public void updateEmpleado(int id, String nombre, String apellido, String dni, String fecna, String email, int empresaid, int tiendaid, String direccion, String telefono) {
         try {

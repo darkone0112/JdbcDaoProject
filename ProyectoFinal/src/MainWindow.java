@@ -1,106 +1,51 @@
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.table.*;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class MainWindow extends JFrame {
-  private JTable table;
-  private JComboBox<String> radiusSelector;
-  private JMenuBar menuBar;
-  private JMenu menu;
-  private JMenuItem addRecord, deleteRecord, updateRecord, findRecord, exit;
+    private static final long serialVersionUID = 1L;
 
-  public MainWindow() {
-    setTitle("Table Selector");
-    setSize(800, 600);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public MainWindow() {
+        setTitle("Main Class");
+        setSize(1024, 720);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
 
-    // Create the radius selector
-    radiusSelector = new JComboBox<String>();
-    radiusSelector.addItem("1 mile");
-    radiusSelector.addItem("5 miles");
-    radiusSelector.addItem("10 miles");
-    radiusSelector.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        // Load the table for the selected radius
-        loadTable(radiusSelector.getSelectedIndex() + 1);
-      }
-    });
+        JMenu menu = new JMenu("Menu");
+        menuBar.add(menu);
 
-    // Create the table
-    table = new JTable();
-    table.setFillsViewportHeight(true);
+        JMenuItem menuItem1 = new JMenuItem("Empleados");
+        menuItem1.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              EmpleadoWindow empleadoWindow = new EmpleadoWindow();
+              add(empleadoWindow, BorderLayout.CENTER);
+              validate();
+          }
+      });      
+        menu.add(menuItem1);
 
-    // Add the radius selector and table to the layout
-    setLayout(new BorderLayout());
-    add(radiusSelector, BorderLayout.NORTH);
-    add(new JScrollPane(table), BorderLayout.CENTER);
+        JMenuItem menuItem2 = new JMenuItem("Empresas");
+        menuItem2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+/*                 Class2 class2 = new Class2();
+                add(class2, BorderLayout.CENTER);
+                validate(); */
+            }
+        });
+        menu.add(menuItem2);
+    }
 
-    // Create the menu bar and menu
-    menuBar = new JMenuBar();
-    menu = new JMenu("Menu");
-    menuBar.add(menu);
-
-    // Create the menu items
-    addRecord = new JMenuItem("Add Record");
-    addRecord.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        // Show the add record dialog
-        addRecord dialog = new AddRecordDialog();
-        dialog.setVisible(true);
-      }
-    });
-    menu.add(addRecord);
-
-    deleteRecord = new JMenuItem("Delete Record");
-    deleteRecord.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        // Show the delete record dialog
-        DeleteRecordDialog dialog = new DeleteRecordDialog();
-        dialog.setVisible(true);
-      }
-    });
-    menu.add(deleteRecord);
-
-    updateRecord = new JMenuItem("Update Record");
-    updateRecord.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        // Show the update record dialog
-        UpdateRecordDialog dialog = new UpdateRecordDialog();
-        dialog.setVisible(true);
-      }
-    });
-    menu.add(updateRecord);
-
-    findRecord = new JMenuItem("Find Record");
-    findRecord.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        // Show the find record dialog
-        FindRecordDialog dialog = new FindRecordDialog();
-        dialog.setVisible(true);
-      }
-    });
-    menu.add(findRecord);
-
-    exit = new JMenuItem("Exit");
-    exit.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        System.exit(0);
-      }
-    });
-    menu.add(exit);
-
-    // Add the menu bar to the layout
-    setJMenuBar(menuBar);
-  }
-
-  private void loadTable(int radius) {
-    // TODO: Load the table with data based on the selected radius
-  }
-
-  public static void main(String[] args) {
-    MainWindow window = new MainWindow();
-    window.setVisible(true);
-  }
+    public static void main(String[] args) {
+        MainWindow mainWindow = new MainWindow();
+        mainWindow.setVisible(true);
+    }
 }
-
