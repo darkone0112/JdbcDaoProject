@@ -30,12 +30,12 @@ public class EmpresaBean implements EmpresaInterface{
     private String pais;
     private String email;
     private String telefono;
-    private Connection conn;
-    private Statement statement;
+    private java.sql.Connection conn;
+    private java.sql.Statement statement;
     
     public void loadJDBC(){
          try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             System.out.println("Error loading JDBC driver: " + e);
         }
@@ -43,7 +43,7 @@ public class EmpresaBean implements EmpresaInterface{
     
     public void connect() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/videogames", "VsCode", "2458");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/PF", "root", "");
             System.out.println("Connection established successfully.");
         } catch (SQLException e) {
             System.out.println("Error connecting to database: " + e);
@@ -102,22 +102,28 @@ public class EmpresaBean implements EmpresaInterface{
     public void setTelefono(String telefono){
         this.telefono=telefono;
     }
+    public Connection getConn() {
+        return conn;
+    }
+    public void setConn(Connection conn) {
+        this.conn = conn;
+    }
+    
     public ResultSet executeQuery(Connection conn, String query) {
+        
         statement = null;
         ResultSet rs = null;
         try {
-            statement = (Statement) conn.createStatement();
+            statement = conn.createStatement();
         } catch (SQLException se) {
             se.printStackTrace();
         }
         return rs;
     }
     public void displayAllEmpresas(Connection conn, DefaultTableModel model) {
-        String query = "SELECT * FROM EMPRESA";
-        //execute the query using the method executeQuery
-        ResultSet rs = executeQuery(conn, query);
         try {
-            // Extract data from result set
+            String query = "SELECT * FROM EMPRESA";
+            ResultSet rs = executeQuery(conn, query);
             model.setRowCount(0);
             while (rs.next()) {
                 model.addRow(new Object[] {
@@ -154,10 +160,10 @@ public class EmpresaBean implements EmpresaInterface{
         panel.add(nombreField);
         panel.add(new JLabel("direccion:"));
         panel.add(direccionField);
-        panel.add(new JLabel("pais:"));
-        panel.add(paisField);
         panel.add(new JLabel("cp:"));
         panel.add(cpField);
+        panel.add(new JLabel("pais:"));
+        panel.add(paisField);
         panel.add(new JLabel("email:"));
         panel.add(emailField);
         panel.add(new JLabel("telefono:"));
@@ -165,7 +171,7 @@ public class EmpresaBean implements EmpresaInterface{
         int result = JOptionPane.showConfirmDialog(null, panel, "Add Empresa", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             try {
-                statement = (Statement) conn.createStatement();
+                statement = conn.createStatement();
                 setId(Integer.parseInt(idField.getText()));
                 setNombre(nombreField.getText());
                 setDireccion(direccionField.getText());
@@ -173,8 +179,10 @@ public class EmpresaBean implements EmpresaInterface{
                 setPais(paisField.getText());
                 setEmail(emailField.getText());
                 setTelefono(telefonoField.getText());
-                String query = "INSERT INTO EMPRESA (name, headquarters, numberWorkers, dateCreation) VALUES ('" + getId() + "', '" + getNombre() + "', " + getDireccion() + ", " + "" + getCp() + "', '" + getEmail() + "'', '" + getTelefono() + "')";
-                System.out.println("Videogame added successfully.");
+                String query = "INSERT INTO EMPRESA (ID, NOMBRE, DIRECCION, CP,PAIS,EMAIL,TELEFONO) VALUES ('" + getId() + "', '" + getNombre() + "','" + getDireccion() + "','" + getCp() + "', '" + getPais() + "','" + getEmail() + "','" + getTelefono() +"')";
+                statement.executeUpdate(query);
+                System.out.println("Empresa added successfully.");
+                System.out.println("hola"+getId()+getNombre()+getDireccion()+getCp()+getPais()+getEmail()+getTelefono());
             } catch (SQLException e) {
                 System.out.println("Error adding videogame: " + e);
             }
@@ -190,16 +198,17 @@ public class EmpresaBean implements EmpresaInterface{
         int result = JOptionPane.showConfirmDialog(null, panel, "Delete Empresa", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             try {
-                statement = (Statement) conn.createStatement();
+                statement = conn.createStatement();
                 setId(Integer.parseInt(idField.getText()));
-                String query = "DELETE FROM studios WHERE name = '" + getId() + "'";
-                System.out.println("Studio deleted successfully.");
+                String query = "DELETE FROM EMPRESA WHERE ID = '" + getId() + "'";
+                statement.executeUpdate(query);
+                System.out.println("Empresa deleted successfully.");
             } catch (SQLException e) {
                 System.out.println("Error deleting studio: " + e);
             }
         }
     }
-    public void updateStudio(Connection conn) {
+    public void updateEmpresa(Connection conn) {
      JTextField idField = new JTextField();
         JTextField nombreField = new JTextField();
         JTextField direccionField = new JTextField();
@@ -228,7 +237,7 @@ public class EmpresaBean implements EmpresaInterface{
         int result = JOptionPane.showConfirmDialog(null, panel, "Add Empresa", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             try {
-                statement = (Statement) conn.createStatement();
+                statement =  conn.createStatement();
                 setId(Integer.parseInt(idField.getText()));
                 setNombre(nombreField.getText());
                 setDireccion(direccionField.getText());
@@ -236,8 +245,9 @@ public class EmpresaBean implements EmpresaInterface{
                 setPais(paisField.getText());
                 setEmail(emailField.getText());
                 setTelefono(telefonoField.getText());
-                String query = "UPDATE empresa SET nombre = '" + getNombre() +"', direccion = '" + getDireccion() + "', cp = '" + getCp() + "',pais ='" + getPais() + "',email = '"+getEmail()+"', telefono = '"+getTelefono()+"' WHERE  id = '" + getId() + "'";
-                System.out.println("Studio updated successfully.");
+                String query = "UPDATE EMPRESA SET NOMBRE = '" + getNombre() + "', DIRECCION = '" + getDireccion() + "', CP = '" + getCp() + "',PAIS ='" + getPais() + "',EMAIL = '"+getEmail()+"', TELEFONO = '"+getTelefono()+"' WHERE  ID = '" + getId() + "'";
+                statement.executeUpdate(query);
+                System.out.println("EMPRESA updated successfully.");  
             } catch (SQLException e) {
                 System.out.println("Error updating studio: " + e);
             }
