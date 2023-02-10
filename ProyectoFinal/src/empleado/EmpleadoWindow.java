@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -71,13 +72,13 @@ public class EmpleadoWindow extends JPanel {
         button5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame tableFrame = new JFrame("Empleados");
-                tableFrame.setSize(800, 600);
                 JTable table = new JTable(model);
                 JScrollPane scrollPane = new JScrollPane(table);
-                tableFrame.add(scrollPane);
+                scrollPane.setPreferredSize(new Dimension(980, 600));
+                add(scrollPane);
                 empleadoBean.displayAllEmployees(model);
-                tableFrame.setVisible(true);
+                revalidate();
+                repaint();
             }
         });
         add(button5);

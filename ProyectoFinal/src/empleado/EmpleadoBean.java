@@ -151,6 +151,7 @@ public class EmpleadoBean {
             System.out.println(rs);
             while (rs.next()) {
                 model.addRow(new Object[]{
+                    rs.getInt("id"),
                     rs.getString("nombre"),
                     rs.getString("apellidos"),
                     rs.getString("dni"),
