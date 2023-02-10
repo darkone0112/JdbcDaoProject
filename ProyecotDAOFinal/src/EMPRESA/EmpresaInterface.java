@@ -34,5 +34,8 @@ public interface EmpresaInterface {
     public void displayAllEmpresas(Connection conn, DefaultTableModel model); 
     public void addEmpresa(Connection conn) ;
     public void deleteEmpresa(Connection conn);
-    public void updateStudio(Connection conn);
+    public void updateEmpresa(Connection conn);
+    public void setConn(Connection conn);
+    public Connection getConn();
 }
+
