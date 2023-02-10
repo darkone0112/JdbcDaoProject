@@ -12,7 +12,7 @@ package EMPRESA;
 public class EmpresaGallery {
 
     static EmpresaInterface getEmpresaDao() {
-           return EmpresaBean();
+           return new EmpresaBean();
     }
     
 }

@@ -84,7 +84,6 @@ public class main {
                 JTable table = new JTable(model);
                 JScrollPane scrollPane = new JScrollPane(table);
                 tableFrame.add(scrollPane);
-                DaoObject.displayAllEmpresas(DaoObject.getConn(), model);
                 tableFrame.setVisible(true);
             }
         });

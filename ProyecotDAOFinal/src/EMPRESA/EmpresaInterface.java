@@ -38,4 +38,3 @@ public interface EmpresaInterface {
     public void setConn(Connection conn);
     public Connection getConn();
 }
-

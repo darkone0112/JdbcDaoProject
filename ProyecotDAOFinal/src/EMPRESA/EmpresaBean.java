@@ -124,7 +124,6 @@ public class EmpresaBean implements EmpresaInterface{
         try {
             String query = "SELECT * FROM EMPRESA";
             ResultSet rs = executeQuery(conn, query);
-            model.setRowCount(0);
             while (rs.next()) {
                 model.addRow(new Object[] {
                     rs.getInt("ID"),
@@ -136,7 +135,6 @@ public class EmpresaBean implements EmpresaInterface{
                     rs.getString("TELEFONO"),
                 });
             }
-            // Clean-up environment
             rs.close();
         } catch (SQLException e) {
             System.out.println("Error displaying data: " + e);
