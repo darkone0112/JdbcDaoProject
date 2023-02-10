@@ -31,7 +31,7 @@ public class main {
         System.out.println(DaoObject.getConn());
 
         // Create a JFrame to display the menu
-        JFrame frame = new JFrame("Studios Menu");
+        JFrame frame = new JFrame("Empresa Menu");
         frame.setSize(600, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -45,10 +45,10 @@ public class main {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         // Create the menu options
-        JButton displayButton = new JButton("Display Studios");
-        JButton addButton = new JButton("Add Studio");
-        JButton updateButton = new JButton("Update Studio");
-        JButton deleteButton = new JButton("Delete Studio");
+        JButton displayButton = new JButton("Display Empresa");
+        JButton addButton = new JButton("Add Empresa");
+        JButton updateButton = new JButton("Update Empresa");
+        JButton deleteButton = new JButton("Delete Empresa");
 
         // Add the menu options to the panel
         panel.add(displayButton);
@@ -67,40 +67,41 @@ public class main {
         frame.add(panel, gbc);
         frame.setVisible(true);
 
-        // Create a table model for displaying the videogames
+       
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("name");
-        model.addColumn("dateCreation");
-        model.addColumn("headQuarters");
-        model.addColumn("NumberWorkerss");    // Add action listeners for the menu options
+        model.addColumn("ID");
+        model.addColumn("NOMBRE");
+        model.addColumn("DIRECCION");
+        model.addColumn("CP");
+        model.addColumn("PAIS");
+        model.addColumn("EMAIL");
+        model.addColumn("TELEFONO");
+        
         displayButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JFrame tableFrame = new JFrame("Studios");
+                JFrame tableFrame = new JFrame("EMPRESAS");
                 tableFrame.setSize(800, 600);
                 JTable table = new JTable(model);
                 JScrollPane scrollPane = new JScrollPane(table);
                 tableFrame.add(scrollPane);
-                DaoObject.displayAllStudios(DaoObject.getConn(), model);
+                DaoObject.displayAllEmpresas(DaoObject.getConn(), model);
                 tableFrame.setVisible(true);
             }
         });
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                DaoObject.addStudio(DaoObject.getConn());
-                DaoObject.displayAllStudios(DaoObject.getConn(), model);
+                DaoObject.addEmpresa(DaoObject.getConn());
             }
         });
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                DaoObject.deleteStudio(DaoObject.getConn());
-                DaoObject.displayAllStudios(DaoObject.getConn(), model);
+                DaoObject.deleteEmpresa(DaoObject.getConn());
             }
         });
         //add update button action listener
         updateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                DaoObject.updateStudio(DaoObject.getConn());
-                DaoObject.displayAllStudios(DaoObject.getConn(), model);
+                DaoObject.updateEmpresa(DaoObject.getConn());
             }
         });
     }
