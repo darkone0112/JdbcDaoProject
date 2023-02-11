@@ -6,9 +6,13 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+
+import empresa.EmpresaWindow;
 
 public class MainWindow extends JFrame {
     private static final long serialVersionUID = 1L;
+    private JPanel currentPanel = null;
 
     public MainWindow() {
         setTitle("Main Class");
@@ -25,7 +29,11 @@ public class MainWindow extends JFrame {
         menuItem1.addActionListener(new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
+              if (currentPanel != null) {
+                  remove(currentPanel);
+              }
               EmpleadoWindow empleadoWindow = new EmpleadoWindow();
+              currentPanel = empleadoWindow;
               add(empleadoWindow, BorderLayout.CENTER);
               validate();
           }
@@ -36,9 +44,13 @@ public class MainWindow extends JFrame {
         menuItem2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-/*                 Class2 class2 = new Class2();
-                add(class2, BorderLayout.CENTER);
-                validate(); */
+                if (currentPanel != null) {
+                    remove(currentPanel);
+                }
+                EmpresaWindow empresaWindow = new EmpresaWindow();
+                currentPanel = empresaWindow;
+                add(empresaWindow, BorderLayout.CENTER);
+                validate();
             }
         });
         menu.add(menuItem2);
