@@ -68,10 +68,10 @@ public class EmpresaBean implements EmpresaInterface {
         this.nombre=nombre;
     }
     public String getDireccion(){
-        return nombre;
+        return direccion;
     }
     public void setDireccion(String direccion){
-        this.nombre=direccion;
+        this.direccion=direccion;
     }
     public int getCp(){
         return cp;
@@ -103,7 +103,6 @@ public class EmpresaBean implements EmpresaInterface {
 
     @Override
     public void addEmpresa() {
-        JTextField idField = new JTextField();
         JTextField nombreField = new JTextField();
         JTextField direccionField = new JTextField();
         JTextField paisField = new JTextField();
@@ -114,8 +113,6 @@ public class EmpresaBean implements EmpresaInterface {
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new javax.swing.JLabel("id:"));
-        panel.add(idField);
         panel.add(new javax.swing.JLabel("nombre:"));
         panel.add(nombreField);
         panel.add(new javax.swing.JLabel("direccion:"));
@@ -132,17 +129,16 @@ public class EmpresaBean implements EmpresaInterface {
         if (result == JOptionPane.OK_OPTION) {
             try {
                 statement = conn.createStatement();
-                setId(Integer.parseInt(idField.getText()));
                 setNombre(nombreField.getText());
                 setDireccion(direccionField.getText());
                 setCp(Integer.parseInt(cpField.getText()));
                 setPais(paisField.getText());
                 setEmail(emailField.getText());
                 setTelefono(telefonoField.getText());
-                String query = "INSERT INTO EMPRESA (ID, NOMBRE, DIRECCION, CP,PAIS,EMAIL,TELEFONO) VALUES ('" + getId() + "', '" + getNombre() + "','" + getDireccion() + "','" + getCp() + "', '" + getPais() + "','" + getEmail() + "','" + getTelefono() +"')";
+                String query = "INSERT INTO EMPRESA ( NOMBRE, DIRECCION, CP,PAIS,EMAIL,TELEFONO) VALUES ('" + getNombre() + "','" + getDireccion() + "','" + getCp() + "', '" + getPais() + "','" + getEmail() + "','" + getTelefono() +"')";
                 statement.executeUpdate(query);
                 System.out.println("Empresa added successfully.");
-                System.out.println("hola"+getId()+getNombre()+getDireccion()+getCp()+getPais()+getEmail()+getTelefono());
+                System.out.println("hola"+getNombre()+getDireccion()+getCp()+getPais()+getEmail()+getTelefono());
             } catch (SQLException e) {
                 System.out.println("Error adding videogame: " + e);
             }
