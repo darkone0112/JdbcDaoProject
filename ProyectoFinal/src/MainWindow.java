@@ -12,6 +12,10 @@ import empresa.EmpresaWindow;
 
 public class MainWindow extends JFrame {
     private static final long serialVersionUID = 1L;
+
+    /* Se crea esta variable JPanel a null para hacer saber al
+     * programa que no hay ningun panel en la ventana principal
+     */
     private JPanel currentPanel = null;
 
     public MainWindow() {
@@ -29,6 +33,8 @@ public class MainWindow extends JFrame {
         menuItem1.addActionListener(new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
+                /* Si el panel actual no es null, se remueve del JFrame */
+                /*para poder cargar el nuevo*/
               if (currentPanel != null) {
                   remove(currentPanel);
               }
@@ -44,6 +50,8 @@ public class MainWindow extends JFrame {
         menuItem2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                /* Si el panel actual no es null, se remueve del JFrame */
+                /*para poder cargar el nuevo*/
                 if (currentPanel != null) {
                     remove(currentPanel);
                 }
