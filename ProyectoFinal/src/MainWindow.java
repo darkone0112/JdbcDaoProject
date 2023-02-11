@@ -9,6 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import empresa.EmpresaWindow;
+import fabricante.FabricantaWindow;
 
 public class MainWindow extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -62,6 +63,23 @@ public class MainWindow extends JFrame {
             }
         });
         menu.add(menuItem2);
+
+        JMenuItem menuItem3 = new JMenuItem("Fabricantes");
+        menuItem2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /* Si el panel actual no es null, se remueve del JFrame */
+                /*para poder cargar el nuevo*/
+                if (currentPanel != null) {
+                    remove(currentPanel);
+                }
+                FabricantaWindow fabricanteWindow = new FabricantaWindow();
+                currentPanel = fabricanteWindow;
+                add(fabricanteWindow, BorderLayout.CENTER);
+                validate();
+            }
+        });
+        menu.add(menuItem3);
     }
 
     public static void main(String[] args) {

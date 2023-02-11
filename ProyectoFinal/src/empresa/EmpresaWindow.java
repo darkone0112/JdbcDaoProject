@@ -57,7 +57,7 @@ public class EmpresaWindow extends JPanel {
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /* anotherClass.method3(); */
+                empresaBean.findEmpresaById(model);
             }
         });
         add(button3);

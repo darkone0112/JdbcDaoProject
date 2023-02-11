@@ -265,6 +265,41 @@ public class EmpresaBean implements EmpresaInterface {
                 System.out.println("Error updating studio: " + e);
             }
         }
-
     }
+
+    public void findEmpresaById(DefaultTableModel model) {
+        JTextField textIdField = new JTextField();
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(new javax.swing.JLabel("Id que quiere buscar"));
+        panel.add(textIdField);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "BuscarEmpresa", JOptionPane.OK_CANCEL_OPTION);
+        if(result == JOptionPane.OK_OPTION) {
+            try {
+                statement = conn.createStatement();
+                String query = "SELECT * from empresa where id = "+ Integer.parseInt(textIdField.getText())+ ";";
+
+                ResultSet rs = statement.executeQuery(query);
+                model.setRowCount(0);
+                System.out.println(rs);
+                while (rs.next()) {
+                    model.addRow(new Object[]{
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("direccion"),
+                        rs.getString("cp"),
+                        rs.getString("pais"),
+                        rs.getString("email"),
+                        rs.getString("telefono"),
+                    });
+                }
+                rs.close();
+        } catch(SQLException e) {
+            System.out.println("Error buscando empresa:" + e);
+        }
+    } 
+
+        }
 }
