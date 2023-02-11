@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public class EmpleadoBean {
+    private int id;
     private String nombre;
     private String apellido;
     private String dni;
@@ -99,28 +101,104 @@ public class EmpleadoBean {
                 JOptionPane.showMessageDialog(null, "Empleado agregado con éxito");
             }
         }
-    public void updateEmpleado(int id, String nombre, String apellido, String dni, String fecna, String email, int empresaid, int tiendaid, String direccion, String telefono) {
-        try {
-            statement = conn.createStatement();
-            String sql = "UPDATE empleado SET nombre='" + nombre + "', apellidos='" + apellido + "', dni='" + dni + "', fecna='" + fecna + "', email='" + email + "', empresaid=" + empresaid + ", tiendaid=" + tiendaid + ", direccion='" + direccion + "', telefono='" + telefono + "' WHERE id=" + id;
-            statement.executeUpdate(sql);
-            System.out.println("Empleado updated successfully.");
-        } catch (SQLException e) {
-            System.out.println("Error updating empleado: " + e);
-        }
-    }
+        public void updateEmpleado(DefaultTableModel model, int selectedRow) {
+            JTextField textFieldEmpleadoID = new JTextField(String.valueOf(model.getValueAt(selectedRow, 0)));
+            JTextField textFieldNombre = new JTextField(String.valueOf(model.getValueAt(selectedRow, 1)));
+            JTextField textFieldApellido = new JTextField(String.valueOf(model.getValueAt(selectedRow, 2)));
+            JTextField textFieldDNI = new JTextField(String.valueOf(model.getValueAt(selectedRow, 3)));
+            JTextField textFieldFECNA = new JTextField(String.valueOf(model.getValueAt(selectedRow, 4)));
+            JTextField textFieldEmail = new JTextField(String.valueOf(model.getValueAt(selectedRow, 5)));
+            JTextField textFieldEmpresaID = new JTextField(String.valueOf(model.getValueAt(selectedRow, 6)));
+            JTextField textFieldTiendaID = new JTextField(String.valueOf(model.getValueAt(selectedRow, 7)));
+            JTextField textFieldTelefono = new JTextField(String.valueOf(model.getValueAt(selectedRow, 8)));
+
     
-    public void deleteEmpleado(int id) {
-        try {
-            statement = conn.createStatement();
-            String sql = "DELETE FROM empleados WHERE id=" + id;
-            statement.executeUpdate(sql);
-            System.out.println("Empleado deleted successfully.");
-        } catch (SQLException e) {
-            System.out.println("Error deleting empleado: " + e);
-        }
-    }
-    public EmpleadoBean findEmpleadoById(int id) {
+            
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            panel.add(new javax.swing.JLabel("Empleado ID:"));
+            panel.add(textFieldEmpleadoID);
+            panel.add(new javax.swing.JLabel("Nombre:"));
+            panel.add(textFieldNombre);
+            panel.add(new javax.swing.JLabel("Apellidos:"));
+            panel.add(textFieldApellido);
+            panel.add(new javax.swing.JLabel("DNI:"));
+            panel.add(textFieldDNI);
+            panel.add(new javax.swing.JLabel("Fecha de Nacimiento:"));
+            panel.add(textFieldFECNA);
+            panel.add(new javax.swing.JLabel("Email:"));
+            panel.add(textFieldEmail);
+            panel.add(new javax.swing.JLabel("Empresa ID:"));
+            panel.add(textFieldEmpresaID);
+            panel.add(new javax.swing.JLabel("Tienda ID:"));
+            panel.add(textFieldTiendaID);
+        
+            panel.add(new javax.swing.JLabel("Telefono:"));
+            panel.add(textFieldTelefono);
+            int result = JOptionPane.showConfirmDialog(null, panel, "Actualizar Empleado", JOptionPane.OK_CANCEL_OPTION);
+            if (result == JOptionPane.OK_OPTION){
+                    try {
+                        statement = conn.createStatement();
+                    } catch (SQLException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    setNombre(textFieldNombre.getText());
+                    setApellido(textFieldApellido.getText());
+                    setDni(textFieldDNI.getText());
+                    setFecna(textFieldFECNA.getText());
+                    setEmail(textFieldEmail.getText());
+                    setEmpresaid(Integer.parseInt(textFieldEmpresaID.getText()));
+                    setTiendaid(Integer.parseInt(textFieldTiendaID.getText()));
+                    setTelefono(textFieldTelefono.getText());
+                    String sql = "UPDATE empleado SET nombre='" + getNombre() + "', apellidos='" + getApellido() + "', dni='" + getDni() + "', fecna='" + getFecna() + "', email='" + getEmail() + "', empresaId=" + getEmpresaid() + ", tiendaId=" + getTiendaid() + ", telefono='" + getTelefono() + "' WHERE dni='" + textFieldDNI.getText() + "';";
+                    try {
+                    statement.executeUpdate(sql);
+                    } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    }
+                    model.setValueAt(getId(), selectedRow, 0);
+                    model.setValueAt(getNombre(), selectedRow, 1);
+                    model.setValueAt(getApellido(), selectedRow, 2);
+                    model.setValueAt(getDni(), selectedRow, 3);
+                    model.setValueAt(getFecna(), selectedRow, 4);
+                    model.setValueAt(getEmail(), selectedRow, 5);
+                    model.setValueAt(getEmpresaid(), selectedRow, 6);
+                    model.setValueAt(getTiendaid(), selectedRow, 7);
+                    model.setValueAt(getTelefono(), selectedRow, 8);
+                    }
+                    }
+
+                    public void deleteEmpleado(DefaultTableModel model, int selectedRow) {
+                        if (selectedRow == -1) {
+                            // No row is selected
+                            JOptionPane.showMessageDialog(null, "Please select a row to delete.", "No Row Selected", JOptionPane.WARNING_MESSAGE);
+                            return;
+                        }
+                        int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the selected employee?", "Delete Confirmation", JOptionPane.YES_NO_OPTION);
+                        if (result == JOptionPane.YES_OPTION) {
+                            // Delete the employee
+                            int selectedEmployeeId = (Integer) model.getValueAt(selectedRow, 0);
+                            try {
+                                String sql = "DELETE FROM empleado WHERE id = ?";
+                                PreparedStatement statement = conn.prepareStatement(sql);
+                                statement.setInt(1, selectedEmployeeId);
+                                statement.executeUpdate();
+                                model.removeRow(selectedRow);
+                            } catch (SQLException e) {
+                                JOptionPane.showMessageDialog(null, "Error deleting employee: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                            }finally {
+                                try {
+                                    statement.close();
+                                } catch (SQLException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        }
+/*     public EmpleadoBean findEmpleadoById(int id) {
         EmpleadoBean empleado = null;
         try {
             statement = conn.createStatement();
@@ -141,7 +219,7 @@ public class EmpleadoBean {
             System.out.println("Error searching for employee: " + e);
         }
         return empleado;
-    }
+    } */
     public void displayAllEmployees(DefaultTableModel model) {
         try {
             String query = "SELECT * FROM empleado";
@@ -171,7 +249,8 @@ public class EmpleadoBean {
 
     public EmpleadoBean() {
     }
-    public EmpleadoBean(String nombre, String apellido, String dni, String fecna, String email, int empresaid, int tiendaid, String telefono) {
+    public EmpleadoBean(int id,String nombre, String apellido, String dni, String fecna, String email, int empresaid, int tiendaid, String telefono) {
+        this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -250,6 +329,12 @@ public class EmpleadoBean {
     }
     public void setResultSet(ResultSet resultSet) {
         this.resultSet = resultSet;
+    }
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
     //
 

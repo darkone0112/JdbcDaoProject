@@ -30,7 +30,8 @@ public class EmpleadoWindow extends JPanel {
         model.addColumn("empresaid");
         model.addColumn("tiendaid");
         model.addColumn("telefono");
-
+        JTable table = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(table);
         JButton button1 = new JButton("Agregar Empleado");
         button1.addActionListener(new ActionListener() {
             @Override
@@ -45,7 +46,10 @@ public class EmpleadoWindow extends JPanel {
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /* anotherClass.method2(); */
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    empleadoBean.updateEmpleado(model, selectedRow);
+                }
             }
         });
         add(button2);
@@ -63,7 +67,7 @@ public class EmpleadoWindow extends JPanel {
         button4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /* anotherClass.method4(); */
+                empleadoBean.deleteEmpleado(model, table.getSelectedRow());
             }
         });
         add(button4);
@@ -72,8 +76,6 @@ public class EmpleadoWindow extends JPanel {
         button5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JTable table = new JTable(model);
-                JScrollPane scrollPane = new JScrollPane(table);
                 scrollPane.setPreferredSize(new Dimension(980, 600));
                 add(scrollPane);
                 empleadoBean.displayAllEmployees(model);
