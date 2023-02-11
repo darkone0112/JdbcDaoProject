@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -16,7 +15,7 @@ public class EmpresaWindow extends JPanel {
     private static final long serialVersionUID = 1L;
     EmpresaBean empresaBean = new EmpresaBean();
 
-    public void EmpresaWindow() {
+    public EmpresaWindow() {
         empresaBean.loadJDBC();
         empresaBean.connect();
         setLayout(new FlowLayout());

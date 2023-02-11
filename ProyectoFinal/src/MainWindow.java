@@ -6,9 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.border.Border;
-
 import empresa.EmpresaWindow;
+
 
 public class MainWindow extends JFrame {
     private static final long serialVersionUID = 1L;

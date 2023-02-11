@@ -4,7 +4,7 @@ DROP TABLE  FABRICANTE;
 DROP TABLE EMPLEADO;
 DROP TABLE TIENDA;
 DROP TABLE EMPRESA;
-//CREATE TABLE EMPRESA ID AUTOINCREMENT, NOMBRE, DIRECCION, CP, PAIS, EMAIL, TELEFONO
+
 CREATE TABLE EMPRESA(
     ID INT(5) NOT NULL AUTO_INCREMENT,
     NOMBRE VARCHAR(50) NOT NULL,
@@ -24,7 +24,6 @@ VALUES
 (4, 'ASUS', '15 Li-Te Rd., Peitou, Taipei 112, Taiwan', 112, 'Taiwan', 'info@asus.com', '886-2-2894-3447'),
 (5, 'Acer', '8F, 88, Sec. 1, Xintai 5th Rd., Xizhi Dist., New Taipei City 22102, Taiwan', 22102, 'Taiwan', 'info@acer.com', '886-2-2696-1234');
 
-//CREATE TABLE TIENDA ID AUTOINCREMENT, NOMBRE, DIRECCION, CP, PAIS, EMAIL, TELEFONO, EMPRESAID
 CREATE TABLE TIENDA(
     ID INT(5) NOT NULL AUTO_INCREMENT,
     NOMBRE VARCHAR(50) NOT NULL,
@@ -54,9 +53,8 @@ VALUES
 (11, 'PC Market', '000 Market St., San Francisco, CA 94102', 94102, 'USA', 'California', 'pcmarket@gmail.com', '415-555-1212', 1),
 (12, 'Computer Central', '111 5th Ave, New York, NY 10001', 10001, 'USA', 'New York', 'computecentral2@gmail.com', '212-555-5678', 2),
 (13, 'Geek Central', '222 Main St., Chicago, IL 60601', 60601, 'USA', 'Illinois', 'geekcentral2@gmail.com', '312-555-6789', 3),
-(14, 'Tech Solutions', '333 Market St., San Francisco, CA 94102', 94102, 'USA', 'California', 'techsolutions2@gmail.com', '415-555-1212', 4)
+(14, 'Tech Solutions', '333 Market St., San Francisco, CA 94102', 94102, 'USA', 'California', 'techsolutions2@gmail.com', '415-555-1212', 4);
 
-//CREATE TABLE EMPLEADO EMPID AUTOINCREMENT, NOMBRE, APELLIDOS, FECNA, DNI, EMAIL, TELEFONO, EMPRESAID
 CREATE TABLE EMPLEADO(
     ID INT(5) NOT NULL AUTO_INCREMENT,
     NOMBRE VARCHAR(50) NOT NULL,
@@ -89,7 +87,6 @@ INSERT INTO EMPLEADO (NOMBRE, APELLIDOS, FECNA, DNI, EMAIL, TELEFONO, EMPRESAID,
 ("Patricia", "Lee", "2003-02-14", "45678901N", "patricialee@email.com", "456789012", 3, 3),
 ("Jennifer", "Johnson", "2004-03-15", "56789012O", "jenniferjohnson@email.com", "567890123", 4, 4);
 
-//CREATE TABLE FABRICANTE ID, NOMBRE, DIRECCION, CP, PAIS, EMAIL, TELEFONO, PAGINA WEB
 CREATE TABLE FABRICANTE(
     ID INT(5) NOT NULL AUTO_INCREMENT,
     NOMBRE VARCHAR(50) NOT NULL,
@@ -115,9 +112,8 @@ VALUES
 ("Intel Corporation", "2200 Mission College Blvd Santa Clara, CA 95054-1549", 95054, "USA", "intelinfo@intel.com", "+1-408-765-8080", "www.intel.com"),
 ("AMD Inc.", "One AMD Place Sunnyvale, CA 94088", 94088, "USA", "amdinfo@amd.com", "+1-408-749-4000", "www.amd.com"),
 ("Cisco Systems, Inc.", "170 West Tasman Drive San Jose, CA 95134", 95134, "USA", "ciscoinfo@cisco.com", "+1-408-526-4000", "www.cisco.com"),
-("LG Electronics, Inc.", "20 Yeouido-dong, Yeongdeungpo-gu, Seoul, South Korea", 150-721, "South Korea", "lgeinfo@lge.com", "+82-2-3777-1114", "www.lge.com")
+("LG Electronics, Inc.", "20 Yeouido-dong, Yeongdeungpo-gu, Seoul, South Korea", 150-721, "South Korea", "lgeinfo@lge.com", "+82-2-3777-1114", "www.lge.com");
 
-//CREATE TABLE PRODUCTO ID, NOMBRE, DESCRIPCION, PRECIO, CANTIDAD, FABRICANTEID, TIENDAID
 CREATE TABLE PRODUCTO(
     ID INT(5) NOT NULL AUTO_INCREMENT,
     NOMBRE VARCHAR(50) NOT NULL,
@@ -153,7 +149,7 @@ VALUES
 ("Microsoft Surface Pro 7", "2-in-1 tablet with detachable keyboard and 10th gen Intel Core processors", 899.99, 7),
 ("Asus ROG Zephyrus G15", "Gaming laptop with powerful NVIDIA graphics and fast refresh rate display", 1699.99, 8),
 ("Intel Core i9-11900K Processor", "High-performance processor for gaming and content creation", 599.99, 9),
-("AMD Ryzen 9ºººººººººººººººººººººººººººººººººººººººººº 5900X Processor", "High-performance processor for demanding tasks and gaming", 499.99, 10),
+("AMD Ryzen 9º 5900X Processor", "High-performance processor for demanding tasks and gaming", 499.99, 10),
 ("Cisco Meraki MR53 Cloud-Managed Access Point", "High-performance cloud-managed wireless access point", 999.99, 11),
 ("LG OLED CX TV", "LG's latest OLED TV with 4K resolution and advanced AI features", 2199.99, 12);
 
@@ -165,7 +161,7 @@ VALUES
     PRIMARY KEY (ID),
     FOREIGN KEY (PRODUCTOID) REFERENCES PRODUCTO(ID),
     FOREIGN KEY (TIENDAID) REFERENCES TIENDA(ID)
- )
+ );
  INSERT INTO INVENTARIO (PRODUCTOID, TIENDAID, CANTIDAD)
 VALUES
 (1, 1, 50),

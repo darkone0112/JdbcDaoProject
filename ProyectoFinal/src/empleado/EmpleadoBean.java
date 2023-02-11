@@ -35,7 +35,7 @@ public class EmpleadoBean {
 
     public void connect() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "secret1234");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "pirata");
             System.out.println("Connection established successfully.");
         } catch (SQLException e) {
             System.out.println("Error connecting to database: " + e);

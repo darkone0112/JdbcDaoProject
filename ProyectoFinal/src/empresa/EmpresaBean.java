@@ -35,7 +35,7 @@ public class EmpresaBean implements EmpresaInterface {
 
     public void connect() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "secret1234");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "pirata");
             System.out.println("Connection established successfully.");
         } catch(SQLException e) {
             System.out.println("Error connecting to database: " + e);
@@ -128,7 +128,7 @@ public class EmpresaBean implements EmpresaInterface {
         panel.add(emailField);
         panel.add(new javax.swing.JLabel("telefono:"));
         panel.add(telefonoField);
-        int result = JOptionPane.showConfirmDialog(null, panel, "Add Empresa", JOptionPane.OK_CANCEL_OPTION);
+        int result = JOptionPane.showConfirmDialog(null, panel, "Agregar Empresa", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             try {
                 statement = conn.createStatement();
@@ -153,21 +153,30 @@ public class EmpresaBean implements EmpresaInterface {
 
     @Override
     public void deleteEmpresa(DefaultTableModel model, int selectedRow) {
-        JTextField idField = new JTextField();
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new javax.swing.JLabel("id:"));
-        panel.add(idField);
-        int result = JOptionPane.showConfirmDialog(null, panel, "Delete Empresa", JOptionPane.OK_CANCEL_OPTION);
+
+        if(selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a row to delete.", "No Row Selected", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int result = JOptionPane.showConfirmDialog(null, "Estas seguro de que deseas borrar la siguiente empresa?", "Delete Confirmation", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.OK_OPTION) {
+            // Delete the employee
+            int selectedEmpresa = (Integer) model.getValueAt(selectedRow, 0);
             try {
-                statement = conn.createStatement();
-                setId(Integer.parseInt(idField.getText()));
-                String query = "DELETE FROM EMPRESA WHERE ID = '" + getId() + "'";
-                statement.executeUpdate(query);
-                System.out.println("Empresa deleted successfully.");
+                String sql = "DELETE FROM empresa WHERE id = ?";
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setInt(1, selectedEmpresa);
+                statement.executeUpdate();
+                model.removeRow(selectedRow);
             } catch (SQLException e) {
-                System.out.println("Error deleting studio: " + e);
+                JOptionPane.showMessageDialog(null, "Error deleting employee: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } finally {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -176,7 +185,10 @@ public class EmpresaBean implements EmpresaInterface {
     public void displayAllEmpresas(DefaultTableModel model) {
         try {
             String query = "SELECT * FROM EMPRESA";
-            ResultSet rs = executeQuery(conn, query);
+            statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            model.setRowCount(0);
+            System.out.println(rs);
             while (rs.next()) {
                 model.addRow(new Object[] {
                     rs.getInt("ID"),
@@ -214,13 +226,13 @@ public class EmpresaBean implements EmpresaInterface {
 
     @Override
     public void updateEmpresa(DefaultTableModel model, int selectedRow) {
-        JTextField idField = new JTextField();
-        JTextField nombreField = new JTextField();
-        JTextField direccionField = new JTextField();
-        JTextField paisField = new JTextField();
-        JTextField cpField = new JTextField();
-        JTextField emailField = new JTextField();
-        JTextField telefonoField = new JTextField();
+        JTextField idField = new JTextField(String.valueOf(model.getValueAt(selectedRow, 0)));
+        JTextField nombreField = new JTextField(String.valueOf(model.getValueAt(selectedRow, 1)));
+        JTextField direccionField = new JTextField(String.valueOf(model.getValueAt(selectedRow, 2)));
+        JTextField cpField = new JTextField(String.valueOf(model.getValueAt(selectedRow, 3)));
+        JTextField paisField = new JTextField(String.valueOf(model.getValueAt(selectedRow, 4)));
+        JTextField emailField = new JTextField(String.valueOf(model.getValueAt(selectedRow, 5)));
+        JTextField telefonoField = new JTextField(String.valueOf(model.getValueAt(selectedRow, 6)));
 
 
         JPanel panel = new JPanel();
@@ -231,15 +243,15 @@ public class EmpresaBean implements EmpresaInterface {
         panel.add(nombreField);
         panel.add(new javax.swing.JLabel("direccion:"));
         panel.add(direccionField);
-        panel.add(new javax.swing.JLabel("pais:"));
-        panel.add(paisField);
         panel.add(new javax.swing.JLabel("cp:"));
         panel.add(cpField);
+        panel.add(new javax.swing.JLabel("pais:"));
+        panel.add(paisField);
         panel.add(new javax.swing.JLabel("email:"));
         panel.add(emailField);
         panel.add(new javax.swing.JLabel("telefono:"));
         panel.add(telefonoField);
-        int result = JOptionPane.showConfirmDialog(null, panel, "Add Empresa", JOptionPane.OK_CANCEL_OPTION);
+        int result = JOptionPane.showConfirmDialog(null, panel, "Actualizar Empresa", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             try {
                 statement =  conn.createStatement();
