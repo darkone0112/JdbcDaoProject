@@ -65,7 +65,7 @@ public class MainWindow extends JFrame {
         menu.add(menuItem2);
 
         JMenuItem menuItem3 = new JMenuItem("Fabricantes");
-        menuItem2.addActionListener(new ActionListener() {
+        menuItem3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 /* Si el panel actual no es null, se remueve del JFrame */

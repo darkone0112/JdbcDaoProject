@@ -35,7 +35,7 @@ public class EmpresaBean implements EmpresaInterface {
 
     public void connect() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestionempresadb", "VsCode", "2458");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestionEmpresaDB", "VsCode", "2458");
             System.out.println("Connection established successfully.");
         } catch(SQLException e) {
             System.out.println("Error connecting to database: " + e);
@@ -300,6 +300,5 @@ public class EmpresaBean implements EmpresaInterface {
             System.out.println("Error buscando empresa:" + e);
         }
     } 
-
         }
 }

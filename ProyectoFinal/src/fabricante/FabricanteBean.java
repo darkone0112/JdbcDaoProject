@@ -42,7 +42,7 @@ public class FabricanteBean implements FabricanteInterface{
     
     public void loadJDBC(){
          try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             System.out.println("Error loading JDBC driver: " + e);
         }
@@ -50,7 +50,7 @@ public class FabricanteBean implements FabricanteInterface{
     
     public void connect() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/PF", "root", "");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestionempresadb", "VsCode", "2458");
             System.out.println("Connection established successfully.");
         } catch (SQLException e) {
             System.out.println("Error connecting to database: " + e);
@@ -134,10 +134,12 @@ public class FabricanteBean implements FabricanteInterface{
         }
         return rs;
     }
-    public void displayAllFabricante(Connection conn, DefaultTableModel model) {
+    public void displayAllFabricante(DefaultTableModel model) {
         try {
             String query = "SELECT * FROM FABRICANTE";
-            ResultSet rs = executeQuery(conn, query);
+            statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            model.setRowCount(0);
             while (rs.next()) {
                 model.addRow(new Object[] {
                     rs.getInt("ID"),
@@ -155,7 +157,7 @@ public class FabricanteBean implements FabricanteInterface{
             System.out.println("Error displaying data: " + e);
         }
     }
-    public void addFabricante(Connection conn) {
+    public void addFabricante() {
         JTextField idField = new JTextField();
         JTextField nombreField = new JTextField();
         JTextField direccionField = new JTextField();
@@ -205,7 +207,7 @@ public class FabricanteBean implements FabricanteInterface{
         
         }
     }
-    public void deleteFabricante(Connection conn) {
+    public void deleteFabricante(DefaultTableModel model, int selectedRow) {
         JTextField idField = new JTextField();
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -224,7 +226,7 @@ public class FabricanteBean implements FabricanteInterface{
             }
         }
     }
-    public void updateFabricante(Connection conn) {
+    public void updateFabricante(DefaultTableModel model, int selectedRow) {
         JTextField idField = new JTextField();
         JTextField nombreField = new JTextField();
         JTextField direccionField = new JTextField();
@@ -272,5 +274,39 @@ public class FabricanteBean implements FabricanteInterface{
             }
         }
     }
-      
+    public void findFabricanteById(DefaultTableModel model) {
+        JTextField textIdField = new JTextField();
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(new javax.swing.JLabel("Id que quiere buscar"));
+        panel.add(textIdField);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "BuscarEmpresa", JOptionPane.OK_CANCEL_OPTION);
+        if(result == JOptionPane.OK_OPTION) {
+            try {
+                statement = conn.createStatement();
+                String query = "SELECT * from fabricante where id = "+ Integer.parseInt(textIdField.getText())+ ";";
+
+                ResultSet rs = statement.executeQuery(query);
+                model.setRowCount(0);
+                System.out.println(rs);
+                while (rs.next()) {
+                    model.addRow(new Object[]{
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("direccion"),
+                        rs.getString("cp"),
+                        rs.getString("pais"),
+                        rs.getString("email"),
+                        rs.getString("telefono"),
+                        rs.getString("PAGINA_WEB"),
+                    });
+                }
+                rs.close();
+        } catch(SQLException e) {
+            System.out.println("Error buscando empresa:" + e);
+        }
+    } 
+        }
 }
+    

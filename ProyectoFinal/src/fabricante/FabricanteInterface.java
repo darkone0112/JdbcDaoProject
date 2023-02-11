@@ -30,12 +30,12 @@ public interface FabricanteInterface {
     public String getPagina();
     public void setPagina(String pagina);
     
-    public void displayAllFabricante(Connection conn, DefaultTableModel model); 
+    public void displayAllFabricante(DefaultTableModel model); 
     
-    public void addFabricante(Connection conn) ;
-    public void deleteFabricante(Connection conn);
-    public void updateFabricante(Connection conn);
-    
+    public void addFabricante() ;
+    public void deleteFabricante(DefaultTableModel model, int selectedRow);
+    public void updateFabricante(DefaultTableModel model, int selectedRow);
+    public void findFabricanteById(DefaultTableModel model);
     public void setConn(Connection conn);
     public Connection getConn();
 }

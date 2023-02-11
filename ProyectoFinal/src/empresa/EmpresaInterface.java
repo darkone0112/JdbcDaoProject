@@ -26,6 +26,7 @@ public interface EmpresaInterface {
     public void addEmpresa();
     public void deleteEmpresa(DefaultTableModel model, int selectedRow);
     public void updateEmpresa(DefaultTableModel model, int selectedRow);
+    public void findEmpresaById(DefaultTableModel model);
     public void setConn(Connection conn);
     public Connection getConn();
 }

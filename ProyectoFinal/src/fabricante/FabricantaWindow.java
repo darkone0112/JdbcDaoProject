@@ -1,68 +1,24 @@
 package fabricante;
-
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Toolkit;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author osboxes
- */
 public class FabricantaWindow extends JPanel {
-      public static void main(String[] args) {
-        FabricanteInterface DaoObject = FabricanteGallery.getFabricanteDao();
-        DaoObject.loadJDBC();
-        DaoObject.connect();
-        System.out.println(DaoObject.getConn());
+    private static final long serialVersionUID = 1L;
+    private FabricanteInterface fabricanteBean = FabricanteGallery.getFabricanteDao();
 
-        // Create a JFrame to display the menu
-        JFrame frame = new JFrame("Fabricantes Menu");
-        frame.setSize(600, 400);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public FabricantaWindow() {
+        fabricanteBean.loadJDBC();
+        fabricanteBean.connect();
+        setLayout(new FlowLayout());
+        /* anotherClass = new AnotherClass(); */
 
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) ((screenSize.getWidth() - frame.getWidth()) / 2);
-        int y = (int) ((screenSize.getHeight() - frame.getHeight()) / 2);
-        frame.setLocation(x, y);
-
-        // Create a JPanel to hold the menu options
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-        // Create the menu options
-        JButton displayButton = new JButton("Display Fabricantes");
-        JButton addButton = new JButton("Add Fabricante");
-        JButton updateButton = new JButton("Update Fabricante");
-        JButton deleteButton = new JButton("Delete Fabricante");
-
-        // Add the menu options to the panel
-        panel.add(displayButton);
-        panel.add(addButton);
-        panel.add(updateButton);
-        panel.add(deleteButton);
-
-        // Add the panel to the frame
-        frame.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        gbc.anchor = GridBagConstraints.CENTER;
-        frame.add(panel, gbc);
-        frame.setVisible(true);
-
-       
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
         model.addColumn("NOMBRE");
@@ -71,33 +27,63 @@ public class FabricantaWindow extends JPanel {
         model.addColumn("PAIS");
         model.addColumn("EMAIL");
         model.addColumn("TELEFONO");
-        model.addColumn("PAGINA_WEB");
-        
-        displayButton.addActionListener(new ActionListener() {
+        model.addColumn("PAGINA WEB");
+        JTable table = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(table);
+        JButton button1 = new JButton("Agregar Fabricante");
+        button1.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame tableFrame = new JFrame("FABRICANTES");
-                tableFrame.setSize(800, 600);
-                JTable table = new JTable(model);
-                JScrollPane scrollPane = new JScrollPane(table);
-                tableFrame.add(scrollPane);
-                tableFrame.setVisible(true);
+               fabricanteBean.addFabricante();
+               fabricanteBean.displayAllFabricante(model);
             }
         });
-        addButton.addActionListener(new ActionListener() {
+        add(button1);
+
+        JButton button2 = new JButton("Modificar Fabricante");
+        button2.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                DaoObject.addFabricante(DaoObject.getConn());
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    fabricanteBean.updateFabricante(model, selectedRow);
+                }
             }
         });
-        deleteButton.addActionListener(new ActionListener() {
+        add(button2);
+
+        JButton button3 = new JButton("Buscar Fabricante");
+        button3.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                DaoObject.deleteFabricante(DaoObject.getConn());
+                fabricanteBean.findFabricanteById(model);
             }
         });
-        //add update button action listener
-        updateButton.addActionListener(new ActionListener() {
+        add(button3);
+
+        JButton button4 = new JButton("Eliminar empresa");
+        button4.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                DaoObject.updateFabricante(DaoObject.getConn());
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    fabricanteBean.deleteFabricante(model, selectedRow);
+                }
             }
         });
+        add(button4);
+
+        JButton button5 = new JButton("Mostrar Todos");
+        button5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                scrollPane.setPreferredSize(new Dimension(980, 600));
+                add(scrollPane);
+                fabricanteBean.displayAllFabricante(model);
+                revalidate();
+                repaint();
+            }
+        });
+        add(button5);
     }
 }
