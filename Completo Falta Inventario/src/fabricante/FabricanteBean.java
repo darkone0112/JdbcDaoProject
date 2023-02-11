@@ -33,7 +33,7 @@ public class FabricanteBean implements FabricanteInterface{
     private java.sql.Connection conn;
     private java.sql.Statement statement;
     private ResultSet resultSet;
-    
+
     public void loadJDBC(){
          try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -41,7 +41,7 @@ public class FabricanteBean implements FabricanteInterface{
             System.out.println("Error loading JDBC driver: " + e);
         }
     }
-    
+
     public void connect() {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Alumno", "root", "");
@@ -59,7 +59,7 @@ public class FabricanteBean implements FabricanteInterface{
         JTextField emailField = new JTextField();
         JTextField telefonoField = new JTextField();
         JTextField paginaField = new JTextField();
-        
+
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel("Id:"));
@@ -78,7 +78,7 @@ public class FabricanteBean implements FabricanteInterface{
         panel.add(telefonoField);
         panel.add(new JLabel("Pagina WEB:"));
         panel.add(paginaField);
-        
+
         int result = JOptionPane.showConfirmDialog(null, panel, "Agregar Fabricante", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             try {
@@ -141,7 +141,7 @@ public class FabricanteBean implements FabricanteInterface{
         JTextField emailField = new JTextField(String.valueOf(model.getValueAt(selectedRow, 5)));
         JTextField telefonoField = new JTextField(String.valueOf(model.getValueAt(selectedRow, 6)));
         JTextField paginaField = new JTextField(String.valueOf(model.getValueAt(selectedRow, 7)));
-        
+
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel("Id:"));
@@ -277,10 +277,10 @@ public class FabricanteBean implements FabricanteInterface{
         this.nombre=nombre;
     }
     public String getDireccion(){
-        return nombre;
+        return direccion;
     }
     public void setDireccion(String direccion){
-        this.nombre=direccion;
+        this.direccion=direccion;
     }
     public int getCp(){
         return cp;

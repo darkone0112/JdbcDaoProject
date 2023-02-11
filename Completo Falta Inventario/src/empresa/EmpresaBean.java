@@ -25,7 +25,7 @@ public class EmpresaBean implements EmpresaInterface{
     private java.sql.Connection conn;
     private java.sql.Statement statement;
     private ResultSet resultSet;
-    
+
     public void loadJDBC(){
          try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -33,7 +33,7 @@ public class EmpresaBean implements EmpresaInterface{
             System.out.println("Error loading JDBC driver: " + e);
         }
     }
-    
+
     public void connect() {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Alumno", "root", "");
@@ -50,8 +50,8 @@ public class EmpresaBean implements EmpresaInterface{
         JTextField cpField = new JTextField();
         JTextField emailField = new JTextField();
         JTextField telefonoField = new JTextField();
-        
-        
+
+
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel("Id:"));
@@ -128,8 +128,8 @@ public class EmpresaBean implements EmpresaInterface{
         JTextField paisField = new JTextField(String.valueOf(model.getValueAt(selectedRow, 4)));
         JTextField emailField = new JTextField(String.valueOf(model.getValueAt(selectedRow, 5)));
         JTextField telefonoField = new JTextField(String.valueOf(model.getValueAt(selectedRow, 6)));
-        
-        
+
+
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel("Id:"));
@@ -259,10 +259,10 @@ public class EmpresaBean implements EmpresaInterface{
         this.nombre=nombre;
     }
     public String getDireccion(){
-        return nombre;
+        return direccion;
     }
     public void setDireccion(String direccion){
-        this.nombre=direccion;
+        this.direccion=direccion;
     }
     public int getCp(){
         return cp;
