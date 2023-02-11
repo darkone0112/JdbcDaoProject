@@ -57,7 +57,11 @@ public class EmpleadoWindow extends JPanel {
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /* anotherClass.method3(); */
+                scrollPane.setPreferredSize(new Dimension(980, 600));
+                add(scrollPane);
+               empleadoBean.findEmpleadoById(model);
+               revalidate();
+               repaint();
             }
         });
         add(button3);
