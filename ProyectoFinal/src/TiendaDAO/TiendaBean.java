@@ -208,29 +208,43 @@ public class TiendaBean implements TiendaInterface{
                             }
             }
         }
-  /*  public TiendaBean findTiendaById(int id) {
-        TiendaBean tienda = null;
-        try {
-            statement = conn.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM tienda WHERE id = " + id + ";");
-            while (result.next()) {
-                tienda = new TiendaBean(
-                    result.getString("nombre"),
-                    result.getString("direccion"),
-                    result.getInt("cp"),
-                    result.getString("pais"),
-                    result.getString("provincia"),
-                    result.getString("email"),
-                    result.getString("telefono"),
-                    result.getInt("empresaid")
-                    
-                );
-            }
-        } catch (SQLException e) {
-            System.out.println("Error searching for employee: " + e);
+     public void findTiendaById(DefaultTableModel model) {
+        JTextField textIdField = new JTextField();
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(new javax.swing.JLabel("Id que quiere buscar"));
+        panel.add(textIdField);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Agregar Tienda", JOptionPane.OK_CANCEL_OPTION);
+        if(result == JOptionPane.OK_OPTION) {
+            try {
+                statement = conn.createStatement();
+                String query = "SELECT * from TIENDA where id = "+ Integer.parseInt(textIdField.getText())+ ";";
+
+                ResultSet rs = statement.executeQuery(query);
+                model.setRowCount(0);
+                System.out.println(rs);
+                while (rs.next()) {
+                    model.addRow(new Object[]{
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("direccion"),
+                        rs.getInt("cp"),
+                        rs.getString("pais"),
+                        rs.getString("provincia"),
+                        rs.getString("email"),
+                        rs.getString("telefono"),
+                        rs.getInt("empresaid")
+                    });
+                }
+                rs.close();
+        } catch(SQLException e) {
+            System.out.println("Error buscando empleado:" + e);
         }
-        return tienda;
-    }*/
+
+        }
+    }
     public void displayAllTienda(DefaultTableModel model) {
         try {
             String query = "SELECT * FROM TIENDA";
