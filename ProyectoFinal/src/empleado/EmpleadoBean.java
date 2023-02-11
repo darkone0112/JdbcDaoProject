@@ -24,7 +24,7 @@ public class EmpleadoBean {
     private Connection conn;
     private Statement statement;
     private ResultSet resultSet;
-    
+
     public void loadJDBC() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -35,13 +35,13 @@ public class EmpleadoBean {
 
     public void connect() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestionEmpresaDB", "VsCode", "2458");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "secret1234");
             System.out.println("Connection established successfully.");
         } catch (SQLException e) {
             System.out.println("Error connecting to database: " + e);
         }
     }
-    
+
     public void addEmpleado() {
         JTextField textFieldNombre = new JTextField();
         JTextField textFieldApellido = new JTextField();
@@ -112,8 +112,8 @@ public class EmpleadoBean {
             JTextField textFieldTiendaID = new JTextField(String.valueOf(model.getValueAt(selectedRow, 7)));
             JTextField textFieldTelefono = new JTextField(String.valueOf(model.getValueAt(selectedRow, 8)));
 
-    
-            
+
+
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.add(new javax.swing.JLabel("Empleado ID:"));
@@ -132,7 +132,7 @@ public class EmpleadoBean {
             panel.add(textFieldEmpresaID);
             panel.add(new javax.swing.JLabel("Tienda ID:"));
             panel.add(textFieldTiendaID);
-        
+
             panel.add(new javax.swing.JLabel("Telefono:"));
             panel.add(textFieldTelefono);
             int result = JOptionPane.showConfirmDialog(null, panel, "Actualizar Empleado", JOptionPane.OK_CANCEL_OPTION);
@@ -198,15 +198,16 @@ public class EmpleadoBean {
                             }
                         }
                         }
-/*     public EmpleadoBean findEmpleadoById(int id) {
+    public EmpleadoBean findEmpleadoById(int id) {
         EmpleadoBean empleado = null;
         try {
             statement = conn.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM empleados WHERE id = " + id + ";");
             while (result.next()) {
                 empleado = new EmpleadoBean(
+                    result.getInt("id"),
                     result.getString("nombre"),
-                    result.getString("apellido"),
+                    result.getString("apellidos"),
                     result.getString("dni"),
                     result.getString("fecna"),
                     result.getString("email"),
@@ -219,7 +220,7 @@ public class EmpleadoBean {
             System.out.println("Error searching for employee: " + e);
         }
         return empleado;
-    } */
+    }
     public void displayAllEmployees(DefaultTableModel model) {
         try {
             String query = "SELECT * FROM empleado";
@@ -245,7 +246,7 @@ public class EmpleadoBean {
             System.out.println("Error displaying employees: " + e);
         }
     }
-    
+
 
     public EmpleadoBean() {
     }

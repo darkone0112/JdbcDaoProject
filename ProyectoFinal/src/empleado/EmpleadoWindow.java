@@ -13,13 +13,13 @@ import javax.swing.table.DefaultTableModel;
 public class EmpleadoWindow extends JPanel {
     private static final long serialVersionUID = 1L;
     EmpleadoBean empleadoBean = new EmpleadoBean();
-    
+
     public EmpleadoWindow() {
         empleadoBean.loadJDBC();
         empleadoBean.connect();
         setLayout(new FlowLayout());
         /* anotherClass = new AnotherClass(); */
-        
+
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("id");
         model.addColumn("nombre");
@@ -41,7 +41,7 @@ public class EmpleadoWindow extends JPanel {
             }
         });
         add(button1);
-        
+
         JButton button2 = new JButton("Modificar Empleado");
         button2.addActionListener(new ActionListener() {
             @Override
@@ -53,7 +53,7 @@ public class EmpleadoWindow extends JPanel {
             }
         });
         add(button2);
-        
+
         JButton button3 = new JButton("Buscar Empleado");
         button3.addActionListener(new ActionListener() {
             @Override
@@ -62,7 +62,7 @@ public class EmpleadoWindow extends JPanel {
             }
         });
         add(button3);
-        
+
         JButton button4 = new JButton("Eliminar Empleado");
         button4.addActionListener(new ActionListener() {
             @Override
@@ -71,7 +71,7 @@ public class EmpleadoWindow extends JPanel {
             }
         });
         add(button4);
-        
+
         JButton button5 = new JButton("Mostrar Todos");
         button5.addActionListener(new ActionListener() {
             @Override
