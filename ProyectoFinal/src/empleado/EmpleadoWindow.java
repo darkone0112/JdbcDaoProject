@@ -12,7 +12,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class EmpleadoWindow extends JPanel {
     private static final long serialVersionUID = 1L;
-    EmpleadoBean empleadoBean = new EmpleadoBean();
+    private EmpleadoInterface empleadoBean = empleadoGallery.getEmpleadoDao();
+    
     
     public EmpleadoWindow() {
         empleadoBean.loadJDBC();
@@ -58,7 +59,7 @@ public class EmpleadoWindow extends JPanel {
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /* anotherClass.method3(); */
+                empleadoBean.findEmpleadoById(model);
             }
         });
         add(button3);

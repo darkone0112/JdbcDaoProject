@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class EmpleadoBean {
+public class EmpleadoBean implements EmpleadoInterface{
     private int id;
     private String nombre;
     private String apellido;
@@ -198,28 +198,44 @@ public class EmpleadoBean {
                             }
                         }
                         }
-/*     public EmpleadoBean findEmpleadoById(int id) {
-        EmpleadoBean empleado = null;
-        try {
-            statement = conn.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM empleados WHERE id = " + id + ";");
-            while (result.next()) {
-                empleado = new EmpleadoBean(
-                    result.getString("nombre"),
-                    result.getString("apellido"),
-                    result.getString("dni"),
-                    result.getString("fecna"),
-                    result.getString("email"),
-                    result.getInt("empresaid"),
-                    result.getInt("tiendaid"),
-                    result.getString("telefono")
-                );
-            }
-        } catch (SQLException e) {
-            System.out.println("Error searching for employee: " + e);
-        }
-        return empleado;
-    } */
+                        public void findEmpleadoById(DefaultTableModel model) {
+                            JTextField textIdField = new JTextField();
+                    
+                            JPanel panel = new JPanel();
+                            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                            panel.add(new javax.swing.JLabel("Id que quiere buscar"));
+                            panel.add(textIdField);
+                    
+                            int result = JOptionPane.showConfirmDialog(null, panel, "Agregar Empresa", JOptionPane.OK_CANCEL_OPTION);
+                            if(result == JOptionPane.OK_OPTION) {
+                                try {
+                                    statement = conn.createStatement();
+                                    String query = "SELECT * from empleado where id = "+ Integer.parseInt(textIdField.getText())+ ";";
+                    
+                                    ResultSet rs = statement.executeQuery(query);
+                                    model.setRowCount(0);
+                                    System.out.println(rs);
+                                    while (rs.next()) {
+                                        model.addRow(new Object[]{
+                                            rs.getInt("id"),
+                                            rs.getString("nombre"),
+                                            rs.getString("apellidos"),
+                                            rs.getString("dni"),
+                                            rs.getString("fecna"),
+                                            rs.getString("email"),
+                                            rs.getInt("empresaid"),
+                                            rs.getInt("tiendaid"),
+                                            rs.getString("telefono")
+                                        });
+                                    }
+                                    rs.close();
+                            } catch(SQLException e) {
+                                System.out.println("Error buscando empleado:" + e);
+                            }
+                            /* return empleado; */
+                        } 
+                    
+                            }
     public void displayAllEmployees(DefaultTableModel model) {
         try {
             String query = "SELECT * FROM empleado";
