@@ -44,7 +44,7 @@ public class FabricanteBean implements FabricanteInterface{
 
     public void connect() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Alumno", "root", "");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "pirata");
             System.out.println("Connection established successfully.");
         } catch (SQLException e) {
             System.out.println("Error connecting to database: " + e);

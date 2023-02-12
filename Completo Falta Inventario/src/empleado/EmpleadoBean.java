@@ -25,7 +25,7 @@ public class EmpleadoBean implements EmpleadoInterface{
     private java.sql.Connection conn;
     private java.sql.Statement statement;
     private ResultSet resultSet;
-    
+
     public void loadJDBC() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -36,13 +36,13 @@ public class EmpleadoBean implements EmpleadoInterface{
 
     public void connect() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Alumno", "root", "");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "pirata");
             System.out.println("Connection established successfully.");
         } catch (SQLException e) {
             System.out.println("Error connecting to database: " + e);
         }
     }
-    
+
     public void addEmpleado() {
         JTextField textFieldNombre = new JTextField();
         JTextField textFieldApellido = new JTextField();
@@ -113,8 +113,8 @@ public class EmpleadoBean implements EmpleadoInterface{
             JTextField textFieldTiendaID = new JTextField(String.valueOf(model.getValueAt(selectedRow, 7)));
             JTextField textFieldTelefono = new JTextField(String.valueOf(model.getValueAt(selectedRow, 8)));
 
-    
-            
+
+
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.add(new javax.swing.JLabel("Empleado ID:"));
@@ -133,7 +133,7 @@ public class EmpleadoBean implements EmpleadoInterface{
             panel.add(textFieldEmpresaID);
             panel.add(new javax.swing.JLabel("Tienda ID:"));
             panel.add(textFieldTiendaID);
-        
+
             panel.add(new javax.swing.JLabel("Telefono:"));
             panel.add(textFieldTelefono);
             int result = JOptionPane.showConfirmDialog(null, panel, "Actualizar Empleado", JOptionPane.OK_CANCEL_OPTION);
@@ -261,7 +261,7 @@ public class EmpleadoBean implements EmpleadoInterface{
             System.out.println("Error displaying employees: " + e);
         }
     }
-    
+
 
     public EmpleadoBean() {
     }

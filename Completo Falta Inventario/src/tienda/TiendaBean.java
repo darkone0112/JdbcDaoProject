@@ -29,7 +29,7 @@ public class TiendaBean implements TiendaInterface{
     private Connection conn;
     private Statement statement;
     private ResultSet resultSet;
-    
+
     public void loadJDBC() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -40,13 +40,13 @@ public class TiendaBean implements TiendaInterface{
 
     public void connect() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Alumno", "root", "");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "pirata");
             System.out.println("Connection established successfully.");
         } catch (SQLException e) {
             System.out.println("Error connecting to database: " + e);
         }
     }
-    
+
     public void addTienda() {
         JTextField textFieldNombre = new JTextField();
         JTextField textFieldDireccion = new JTextField();
@@ -75,7 +75,7 @@ public class TiendaBean implements TiendaInterface{
         panel.add(textFieldTelefono);
         panel.add(new javax.swing.JLabel("EmpresaId:"));
         panel.add(textFieldEmpresaId);
-        
+
         int result = JOptionPane.showConfirmDialog(null, panel, "Agregar tienda", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION){
                 try {
@@ -92,7 +92,7 @@ public class TiendaBean implements TiendaInterface{
                 setEmail(textFieldEmail.getText());
                 setTelefono(textFieldTelefono.getText());
                 setEmpresaId(Integer.parseInt(textFieldEmpresaId.getText()));
-                
+
                 String sql = "INSERT INTO TIENDA (nombre, direccion, cp, pais, provincia, email, telefono, empresaid) " +
                              "VALUES ('" + getNombre() + "','" + getDireccion() + "','" + getCp() + "','" + getPais() + "','" + getProvincia() + "','" + getEmail() + "','" + getTelefono() +  "','" + getEmpresaId() + "')";
                 try {
@@ -117,8 +117,8 @@ public class TiendaBean implements TiendaInterface{
             JTextField textFieldTelefono = new JTextField(String.valueOf(model.getValueAt(selectedRow, 7)));
             JTextField textFieldEmpresaId = new JTextField(String.valueOf(model.getValueAt(selectedRow, 8)));
 
-    
-            
+
+
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.add(new javax.swing.JLabel("Empleado ID:"));
@@ -137,7 +137,7 @@ public class TiendaBean implements TiendaInterface{
             panel.add(textFieldEmail);
             panel.add(new javax.swing.JLabel("Telefono:"));
             panel.add(textFieldTelefono);
-        
+
             panel.add(new javax.swing.JLabel("EmpresaId:"));
             panel.add(textFieldEmpresaId);
             int result = JOptionPane.showConfirmDialog(null, panel, "Actualizar Tienda", JOptionPane.OK_CANCEL_OPTION);
@@ -157,7 +157,7 @@ public class TiendaBean implements TiendaInterface{
                     setEmail(textFieldEmail.getText());
                     setTelefono(textFieldTelefono.getText());
                     setEmpresaId(Integer.parseInt(textFieldEmpresaId.getText()));
-                    
+
                     String sql = "UPDATE TIENDA SET nombre='" + getNombre() + "', direccion='" + getDireccion() + "', cp='" + getCp() + "', pais='" + getPais() + "', provincia='" + getProvincia() + "', email=" + getEmail() + ", Telefono=" + getTelefono() + ", EMPRESAID='" + getEmpresaId() + "' WHERE ID='" + Integer.parseInt(textFieldTiendaID.getText()) + "';";
                     try {
                     statement.executeUpdate(sql);
@@ -220,7 +220,7 @@ public class TiendaBean implements TiendaInterface{
                     result.getString("email"),
                     result.getString("telefono"),
                     result.getInt("empresaid")
-                    
+
                 );
             }
         } catch (SQLException e) {
@@ -246,7 +246,7 @@ public class TiendaBean implements TiendaInterface{
                     rs.getString("email"),
                     rs.getString("telefono"),
                     rs.getInt("empresaid")
-                    
+
                 });
             }
             rs.close();
@@ -254,7 +254,7 @@ public class TiendaBean implements TiendaInterface{
             System.out.println("Error displaying TIENDA: " + e);
         }
     }
-    
+
 
     public TiendaBean() {
     }
@@ -346,5 +346,5 @@ public class TiendaBean implements TiendaInterface{
     }
     //
 
-    
+
 }

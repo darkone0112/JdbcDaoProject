@@ -1,6 +1,8 @@
 import empleado.EmpleadoWindow;
 import empresa.EmpresaWindow;
 import fabricante.FabricanteWindow;
+import inventario.InventarioWindow;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,7 +44,7 @@ public class MainWindow extends JFrame {
               add(empleadoWindow, BorderLayout.CENTER);
               validate();
           }
-      });      
+      });
         menu.add(menuItem1);
 
         JMenuItem menuItem2 = new JMenuItem("Empresas");
@@ -78,7 +80,7 @@ public class MainWindow extends JFrame {
             }
         });
         menu.add(menuItem3);
-        
+
         JMenuItem menuItem4 = new JMenuItem("Tienda");
         menuItem4.addActionListener(new ActionListener() {
             @Override
@@ -95,7 +97,7 @@ public class MainWindow extends JFrame {
             }
         });
         menu.add(menuItem4);
-        
+
         JMenuItem menuItem5 = new JMenuItem("Producto");
         menuItem5.addActionListener(new ActionListener() {
             @Override
@@ -111,8 +113,26 @@ public class MainWindow extends JFrame {
                 validate();
             }
         });
+
         menu.add(menuItem5);
-        
+
+        JMenuItem menuItem6 = new JMenuItem("Inventario");
+        menuItem6.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /* Si el panel actual no es null, se remueve del JFrame */
+                /*para poder cargar el nuevo*/
+                if (currentPanel != null) {
+                    remove(currentPanel);
+                }
+                InventarioWindow inventarioWindow = new InventarioWindow();
+                currentPanel = inventarioWindow;
+                add(inventarioWindow, BorderLayout.CENTER);
+                validate();
+            }
+        });
+        menu.add(menuItem6);
+
     }
 
     public static void main(String[] args) {

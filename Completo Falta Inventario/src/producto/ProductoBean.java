@@ -29,11 +29,11 @@ public class ProductoBean implements ProductoInterface{
     private String descripcion;
     private BigDecimal precio;
     private int fabricanteid;
-    
+
     private Connection conn;
     private Statement statement;
     private ResultSet resultSet;
-    
+
     public void loadJDBC() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -44,25 +44,25 @@ public class ProductoBean implements ProductoInterface{
 
     public void connect() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Alumno", "root", "");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "pirata");
             System.out.println("Connection established successfully.");
         } catch (SQLException e) {
             System.out.println("Error connecting to database: " + e);
         }
     }
-    
+
     public void addProducto() {
         JTextField textFieldNombre = new JTextField();
         JTextField textFieldDescripcion = new JTextField();
         JTextField textFieldPrecio = new JTextField();
         JTextField textFieldFabricanteID = new JTextField();
-       
+
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        
-            
-        
+
+
+
             panel.add(new javax.swing.JLabel("Nombre:"));
             panel.add(textFieldNombre);
             panel.add(new javax.swing.JLabel("Descripcion:"));
@@ -71,7 +71,7 @@ public class ProductoBean implements ProductoInterface{
             panel.add(textFieldPrecio);
             panel.add(new javax.swing.JLabel("Fabricanteid:"));
             panel.add(textFieldFabricanteID);
-        
+
             int result = JOptionPane.showConfirmDialog(null, panel, "Agregar producto", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION){
                 try {
@@ -84,7 +84,7 @@ public class ProductoBean implements ProductoInterface{
                 setDescripcion(textFieldDescripcion.getText());
                 setPrecio(new BigDecimal(textFieldPrecio.getText()));
                 setFabricanteId(Integer.parseInt(textFieldFabricanteID.getText()));
-               
+
                 String sql = "INSERT INTO PRODUCTO (nombre, descripcion, precio, fabricanteid) " +
                              "VALUES ('" + getNombre() + "','" + getDescripcion() + "','" + getPrecio() + "','" + getFabricanteId() + "')";
                 try {
@@ -104,9 +104,9 @@ public class ProductoBean implements ProductoInterface{
             JTextField textFieldDescripcion = new JTextField(String.valueOf(model.getValueAt(selectedRow, 2)));
             JTextField textFieldPrecio = new JTextField(String.valueOf(model.getValueAt(selectedRow, 3)));
             JTextField textFieldFabricanteID = new JTextField(String.valueOf(model.getValueAt(selectedRow, 4)));
-            
-    
-            
+
+
+
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.add(new javax.swing.JLabel("Producto ID:"));
@@ -119,8 +119,8 @@ public class ProductoBean implements ProductoInterface{
             panel.add(textFieldPrecio);
             panel.add(new javax.swing.JLabel("Fabricanteid:"));
             panel.add(textFieldFabricanteID);
-            
-      
+
+
             int result = JOptionPane.showConfirmDialog(null, panel, "Actualizar fabricante", JOptionPane.OK_CANCEL_OPTION);
             if (result == JOptionPane.OK_OPTION){
                     try {
@@ -134,7 +134,7 @@ public class ProductoBean implements ProductoInterface{
                     setDescripcion(textFieldDescripcion.getText());
                     setPrecio(new BigDecimal(textFieldPrecio.getText()));
                     setFabricanteId(Integer.parseInt(textFieldFabricanteID.getText()));
-                   
+
                     String sql = "UPDATE PRODUCTO SET nombre='" + getNombre() + "', descripcion='" + getDescripcion() + "', precio='" + getPrecio() + "', fabricanteid='" + getFabricanteId() + "' WHERE ID='" + Integer.parseInt(textFieldProductoID.getText()) + "';";
                     try {
                     statement.executeUpdate(sql);
@@ -147,7 +147,7 @@ public class ProductoBean implements ProductoInterface{
                     model.setValueAt(getDescripcion(), selectedRow, 2);
                     model.setValueAt(getPrecio(), selectedRow, 3);
                     model.setValueAt(getFabricanteId(), selectedRow, 4);
-                   
+
                     }
                     }
 
@@ -211,7 +211,7 @@ public class ProductoBean implements ProductoInterface{
         }
 
         }
-    } 
+    }
     public void displayAllProducto(DefaultTableModel model) {
         try {
             String query = "SELECT * FROM PRODUCTO";
@@ -226,7 +226,7 @@ public class ProductoBean implements ProductoInterface{
                     rs.getString("descripcion"),
                     rs.getBigDecimal("precio"),
                     rs.getInt("fabricanteid"),
-                    
+
                 });
             }
             rs.close();
@@ -234,7 +234,7 @@ public class ProductoBean implements ProductoInterface{
             System.out.println("Error displaying employees: " + e);
         }
     }
-    
+
 
     public ProductoBean() {
     }
@@ -273,14 +273,14 @@ public class ProductoBean implements ProductoInterface{
     public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
-    
+
     public int getFabricanteId() {
         return fabricanteid;
     }
     public void setFabricanteId(int fabricanteid) {
         this.fabricanteid = fabricanteid;
     }
-    
+
     public Connection getConn() {
         return conn;
     }
@@ -299,6 +299,6 @@ public class ProductoBean implements ProductoInterface{
     public void setResultSet(ResultSet resultSet) {
         this.resultSet = resultSet;
     }
-   
+
     //
 }
