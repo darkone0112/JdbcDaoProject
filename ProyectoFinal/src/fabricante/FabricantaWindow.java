@@ -61,7 +61,7 @@ public class FabricantaWindow extends JPanel {
         });
         add(button3);
 
-        JButton button4 = new JButton("Eliminar empresa");
+        JButton button4 = new JButton("Eliminar Fabricante");
         button4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -85,5 +85,10 @@ public class FabricantaWindow extends JPanel {
             }
         });
         add(button5);
+        scrollPane.setPreferredSize(new Dimension(980, 600));
+        add(scrollPane);
+        fabricanteBean.displayAllFabricante(model);
+        revalidate();
+        repaint();
     }
 }

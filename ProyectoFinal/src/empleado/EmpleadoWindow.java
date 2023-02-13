@@ -85,5 +85,10 @@ public class EmpleadoWindow extends JPanel {
             }
         });
         add(button5);
+        scrollPane.setPreferredSize(new Dimension(980, 600));
+        add(scrollPane);
+        empleadoBean.displayAllEmployees(model);
+        revalidate();
+        repaint();
     }
 }

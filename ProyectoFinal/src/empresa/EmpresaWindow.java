@@ -82,5 +82,10 @@ public class EmpresaWindow extends JPanel {
             }
         });
         add(button5);
+        scrollPane.setPreferredSize(new Dimension(980, 600));
+        add(scrollPane);
+        empresaBean.displayAllEmpresas(model);
+        revalidate();
+        repaint();
     }
 }

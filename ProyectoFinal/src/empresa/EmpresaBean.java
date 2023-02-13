@@ -159,7 +159,7 @@ public class EmpresaBean implements EmpresaInterface {
             // Delete the employee
             int selectedEmpresa = (Integer) model.getValueAt(selectedRow, 0);
             try {
-                String sql = "DELETE FROM empresa WHERE id = ?";
+                String sql = "DELETE FROM EMPRESA WHERE id = ?";
                 PreparedStatement statement = conn.prepareStatement(sql);
                 statement.setInt(1, selectedEmpresa);
                 statement.executeUpdate();
@@ -279,7 +279,7 @@ public class EmpresaBean implements EmpresaInterface {
         if(result == JOptionPane.OK_OPTION) {
             try {
                 statement = conn.createStatement();
-                String query = "SELECT * from empresa where id = "+ Integer.parseInt(textIdField.getText())+ ";";
+                String query = "SELECT * from EMPRESA where id = "+ Integer.parseInt(textIdField.getText())+ ";";
 
                 ResultSet rs = statement.executeQuery(query);
                 model.setRowCount(0);

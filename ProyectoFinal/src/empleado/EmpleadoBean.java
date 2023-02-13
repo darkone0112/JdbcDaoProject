@@ -88,7 +88,7 @@ public class EmpleadoBean implements EmpleadoInterface{
                 setTiendaid(Integer.parseInt(textFieldTiendaID.getText()));
                 setTelefono(textFieldTelefono.getText());
                 java.sql.Date date = java.sql.Date.valueOf(textFieldFECNA.getText());
-                String sql = "INSERT INTO empleado (nombre, apellidos, dni, fecna, email, empresaid, tiendaid, telefono) " +
+                String sql = "INSERT INTO EMPLEADO (nombre, apellidos, dni, fecna, email, empresaid, tiendaid, telefono) " +
                              "VALUES ('" + getNombre() + "','" + getApellido() + "','" + getDni() + "','" + date + "','" + getEmail() + "','" + getEmpresaid() + "','" + getTiendaid() +  "','" + getTelefono() + "')";
                 try {
                     System.out.println("ok");
@@ -151,7 +151,7 @@ public class EmpleadoBean implements EmpleadoInterface{
                     setEmpresaid(Integer.parseInt(textFieldEmpresaID.getText()));
                     setTiendaid(Integer.parseInt(textFieldTiendaID.getText()));
                     setTelefono(textFieldTelefono.getText());
-                    String sql = "UPDATE empleado SET nombre='" + getNombre() + "', apellidos='" + getApellido() + "', dni='" + getDni() + "', fecna='" + getFecna() + "', email='" + getEmail() + "', empresaId=" + getEmpresaid() + ", tiendaId=" + getTiendaid() + ", telefono='" + getTelefono() + "' WHERE dni='" + textFieldDNI.getText() + "';";
+                    String sql = "UPDATE EMPLEADO SET nombre='" + getNombre() + "', apellidos='" + getApellido() + "', dni='" + getDni() + "', fecna='" + getFecna() + "', email='" + getEmail() + "', empresaId=" + getEmpresaid() + ", tiendaId=" + getTiendaid() + ", telefono='" + getTelefono() + "' WHERE dni='" + textFieldDNI.getText() + "';";
                     try {
                     statement.executeUpdate(sql);
                     } catch (SQLException e) {
@@ -181,7 +181,7 @@ public class EmpleadoBean implements EmpleadoInterface{
                             // Delete the employee
                             int selectedEmployeeId = (Integer) model.getValueAt(selectedRow, 0);
                             try {
-                                String sql = "DELETE FROM empleado WHERE id = ?";
+                                String sql = "DELETE FROM EMPLEADO WHERE id = ?";
                                 PreparedStatement statement = conn.prepareStatement(sql);
                                 statement.setInt(1, selectedEmployeeId);
                                 statement.executeUpdate();
@@ -210,7 +210,7 @@ public class EmpleadoBean implements EmpleadoInterface{
                             if(result == JOptionPane.OK_OPTION) {
                                 try {
                                     statement = conn.createStatement();
-                                    String query = "SELECT * from empleado where id = "+ Integer.parseInt(textIdField.getText())+ ";";
+                                    String query = "SELECT * from EMPLEADO where id = "+ Integer.parseInt(textIdField.getText())+ ";";
                     
                                     ResultSet rs = statement.executeQuery(query);
                                     model.setRowCount(0);
@@ -238,7 +238,7 @@ public class EmpleadoBean implements EmpleadoInterface{
                             }
     public void displayAllEmployees(DefaultTableModel model) {
         try {
-            String query = "SELECT * FROM empleado";
+            String query = "SELECT * FROM EMPLEADO";
             statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(query);
             model.setRowCount(0);

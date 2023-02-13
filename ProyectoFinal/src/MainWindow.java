@@ -1,3 +1,7 @@
+import empresa.EmpresaWindow;
+import fabricante.FabricantaWindow;
+import inventario.InventarioWindow;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,16 +11,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-
-import empresa.EmpresaWindow;
-import fabricante.FabricantaWindow;
+import producto.ProductoWindow;
+import tienda.TiendaWindow;
 
 public class MainWindow extends JFrame {
     private static final long serialVersionUID = 1L;
-
-    /* Se crea esta variable JPanel a null para hacer saber al
-     * programa que no hay ningun panel en la ventana principal
-     */
     private JPanel currentPanel = null;
 
     public MainWindow() {
@@ -44,7 +43,7 @@ public class MainWindow extends JFrame {
               add(empleadoWindow, BorderLayout.CENTER);
               validate();
           }
-      });      
+      });
         menu.add(menuItem1);
 
         JMenuItem menuItem2 = new JMenuItem("Empresas");
@@ -80,9 +79,62 @@ public class MainWindow extends JFrame {
             }
         });
         menu.add(menuItem3);
+
+        JMenuItem menuItem4 = new JMenuItem("Tienda");
+        menuItem4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /* Si el panel actual no es null, se remueve del JFrame */
+                /*para poder cargar el nuevo*/
+                if (currentPanel != null) {
+                    remove(currentPanel);
+                }
+                TiendaWindow tiendaWindow = new TiendaWindow();
+                currentPanel = tiendaWindow;
+                add(tiendaWindow, BorderLayout.CENTER);
+                validate();
+            }
+        });
+        menu.add(menuItem4);
+
+        JMenuItem menuItem5 = new JMenuItem("Producto");
+        menuItem5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /* Si el panel actual no es null, se remueve del JFrame */
+                /*para poder cargar el nuevo*/
+                if (currentPanel != null) {
+                    remove(currentPanel);
+                }
+                ProductoWindow prodcutoWindow = new ProductoWindow();
+                currentPanel = prodcutoWindow;
+                add(prodcutoWindow, BorderLayout.CENTER);
+                validate();
+            }
+        });
+
+        menu.add(menuItem5);
+
+        JMenuItem menuItem6 = new JMenuItem("Inventario");
+        menuItem6.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /* Si el panel actual no es null, se remueve del JFrame */
+                /*para poder cargar el nuevo*/
+                if (currentPanel != null) {
+                    remove(currentPanel);
+                }
+                InventarioWindow inventarioWindow = new InventarioWindow();
+                currentPanel = inventarioWindow;
+                add(inventarioWindow, BorderLayout.CENTER);
+                validate();
+            }
+        });
+        menu.add(menuItem6);
+
     }
 
-    public static void menu(String[] args) {
+    public static void main(String[] args) {
         MainWindow mainWindow = new MainWindow();
         mainWindow.setVisible(true);
     }
