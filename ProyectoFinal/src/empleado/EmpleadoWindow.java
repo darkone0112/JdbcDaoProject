@@ -1,24 +1,44 @@
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class EmpleadoWindow extends JPanel {
     private static final long serialVersionUID = 1L;
-    EmpleadoBean empleadoBean = new EmpleadoBean();
+    private EmpleadoInterface empleadoBean = empleadoGallery.getEmpleadoDao();
     
-
+    
     public EmpleadoWindow() {
+        empleadoBean.loadJDBC();
+        empleadoBean.connect();
         setLayout(new FlowLayout());
         /* anotherClass = new AnotherClass(); */
         
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("id");
+        model.addColumn("nombre");
+        model.addColumn("apellidos");
+        model.addColumn("dni");
+        model.addColumn("fecna");
+        model.addColumn("email");
+        model.addColumn("empresaid");
+        model.addColumn("tiendaid");
+        model.addColumn("telefono");
+        JTable table = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(table);
         JButton button1 = new JButton("Agregar Empleado");
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                empleadoBean.addEmpleado();
+               empleadoBean.displayAllEmployees(model);
             }
         });
         add(button1);
@@ -27,7 +47,10 @@ public class EmpleadoWindow extends JPanel {
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /* anotherClass.method2(); */
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    empleadoBean.updateEmpleado(model, selectedRow);
+                }
             }
         });
         add(button2);
@@ -36,7 +59,7 @@ public class EmpleadoWindow extends JPanel {
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /* anotherClass.method3(); */
+                empleadoBean.findEmpleadoById(model);
             }
         });
         add(button3);
@@ -45,7 +68,7 @@ public class EmpleadoWindow extends JPanel {
         button4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /* anotherClass.method4(); */
+                empleadoBean.deleteEmpleado(model, table.getSelectedRow());
             }
         });
         add(button4);
@@ -54,7 +77,11 @@ public class EmpleadoWindow extends JPanel {
         button5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /* anotherClass.method5(); */
+                scrollPane.setPreferredSize(new Dimension(980, 600));
+                add(scrollPane);
+                empleadoBean.displayAllEmployees(model);
+                revalidate();
+                repaint();
             }
         });
         add(button5);
